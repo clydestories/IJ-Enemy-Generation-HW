@@ -21,7 +21,5 @@ public class SpawnManager : MonoBehaviour
             _spawners[Random.Range(0, _spawners.Count)].Spawn();
             yield return wait;
         }
-
-        yield return null;
     }
 }
