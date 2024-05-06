@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
@@ -8,11 +9,19 @@ public class SpawnManager : MonoBehaviour
 
     private void Start()
     {
-        InvokeRepeating(nameof(Spawn), _delay, _delay);
+        StartCoroutine(nameof(Spawn));
     }
 
-    private void Spawn()
+    private IEnumerator Spawn()
     {
-        _spawners[Random.Range(0, _spawners.Count)].Spawn();
+        var wait = new WaitForSeconds(_delay);
+
+        while (enabled)
+        {
+            _spawners[Random.Range(0, _spawners.Count)].Spawn();
+            yield return wait;
+        }
+
+        yield return null;
     }
 }
